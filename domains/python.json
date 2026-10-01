@@ -1,0 +1,27 @@
+{
+  "id": "python",
+  "name": "Python",
+  "starter_file": "starter.py",
+  "test_file": "test_exercise.py",
+  "solution_file": "solution.py",
+  "analysis_mode": "python_ast",
+  "code_extensions": [".py"],
+  "primary_command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "{test_file}"
+  ],
+  "fallback_command": [
+    "{python}",
+    "-m",
+    "unittest",
+    "-v",
+    "{test_file}"
+  ],
+  "ai_context": "Python 基础语法、函数、数据类型、测试和本地应用开发。"
+}
+

@@ -1,0 +1,13 @@
+{
+  "id": "command",
+  "name": "通用命令行检查",
+  "starter_file": "starter.txt",
+  "test_file": "check.py",
+  "solution_file": "solution.txt",
+  "analysis_mode": "generic",
+  "code_extensions": [".py", ".r", ".jl", ".m", ".txt"],
+  "primary_command": ["{python}", "{test_file}"],
+  "fallback_command": ["{python}", "{test_file}"],
+  "ai_context": "根据课程 meta.json 中的 domain_context 字段描述当前学科。"
+}
+

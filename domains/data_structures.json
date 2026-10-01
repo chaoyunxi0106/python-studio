@@ -1,0 +1,27 @@
+{
+  "id": "data_structures",
+  "name": "数据结构与算法",
+  "starter_file": "starter.py",
+  "test_file": "test_exercise.py",
+  "solution_file": "solution.py",
+  "analysis_mode": "python_ast",
+  "code_extensions": [".py"],
+  "primary_command": [
+    "{python}",
+    "-m",
+    "pytest",
+    "-q",
+    "-p",
+    "no:cacheprovider",
+    "{test_file}"
+  ],
+  "fallback_command": [
+    "{python}",
+    "-m",
+    "unittest",
+    "-v",
+    "{test_file}"
+  ],
+  "ai_context": "数据结构、算法复杂度、边界条件、正确性证明和实现测试。"
+}
+

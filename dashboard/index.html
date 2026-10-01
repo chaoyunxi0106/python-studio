@@ -1,0 +1,1117 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="dark" />
+    <title>Python Studio</title>
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app" id="app">
+      <aside class="rail" id="rail">
+        <header class="rail-head">
+          <button
+            id="courseButton"
+            class="course-button"
+            type="button"
+            aria-haspopup="menu"
+            aria-expanded="false"
+            aria-controls="courseMenu"
+            title="切换课程或模式"
+          >
+            <span class="brand-mark" aria-hidden="true"
+              ><span class="brand-glyph-a">P</span
+              ><span class="brand-glyph-b">y</span></span
+            >
+          </button>
+          <div class="course-copy">
+            <h1 id="brandTitle" class="course-name">Python Studio</h1>
+            <p id="brandTagline" class="course-tagline">
+              本地应用开发训练场
+            </p>
+          </div>
+          <button
+            id="railHideButton"
+            class="rail-collapse"
+            type="button"
+            aria-label="收起侧栏"
+            title="收起侧栏"
+          >
+            ‹
+          </button>
+          <div id="courseMenu" class="course-menu" role="menu" hidden>
+            <p class="course-menu-label">课程</p>
+            <select
+              id="workspaceSelect"
+              class="workspace-select"
+              aria-label="选择学习科目"
+            >
+              <option value="python">Python Studio</option>
+            </select>
+            <p class="course-menu-label">训练模式</p>
+            <div id="modeList" class="course-menu-list">
+              <button
+                class="course-menu-item active"
+                data-mode="course"
+                type="button"
+              >
+                课程模式
+              </button>
+              <button class="course-menu-item" data-mode="workshop" type="button">
+                工坊模式
+              </button>
+            </div>
+          </div>
+        </header>
+
+        <div class="rail-stats" aria-label="学习进度">
+          <div class="rail-stat">
+            <strong id="statCompletion">0%</strong>
+            <span>完成</span>
+          </div>
+          <div class="rail-stat">
+            <strong id="statMinutes">0</strong>
+            <span>用时</span>
+          </div>
+          <div class="rail-stat">
+            <strong id="statToday">0</strong>
+            <span>今日</span>
+          </div>
+        </div>
+
+        <nav class="rail-nav" aria-label="主导航">
+          <button class="view-tab rail-tab active" data-view="practice" type="button">
+            <svg class="rail-tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H11v16H6.5A2.5 2.5 0 0 0 4 21.5z" />
+              <path d="M20 5.5A2.5 2.5 0 0 0 17.5 3H13v16h4.5a2.5 2.5 0 0 1 2.5 2.5z" />
+            </svg>
+            <span>练习</span>
+          </button>
+          <button class="view-tab rail-tab" data-view="history" type="button">
+            <svg class="rail-tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M3 12a9 9 0 1 0 3-6.7L3 8" />
+              <path d="M3 3v5h5" />
+              <path d="M12 7v5l3 2" />
+            </svg>
+            <span>档案</span>
+          </button>
+          <button class="view-tab rail-tab" data-view="companion" type="button">
+            <svg class="rail-tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 15a4 4 0 0 1-4 4H8l-5 3V7a4 4 0 0 1 4-4h10a4 4 0 0 1 4 4z" />
+              <path d="M8 9h8" />
+              <path d="M8 13h5" />
+            </svg>
+            <span>伴学</span>
+          </button>
+          <button class="view-tab rail-tab" data-view="workshop" type="button">
+            <svg class="rail-tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="6" cy="6" r="2.5" />
+              <circle cx="18" cy="7" r="2.5" />
+              <circle cx="13" cy="18" r="2.5" />
+              <path d="m8.4 6.2 7.1.6" />
+              <path d="m16.9 9.4-3 6.2" />
+              <path d="m6.8 8.4 4.9 7.2" />
+            </svg>
+            <span>工坊</span>
+          </button>
+          <button class="view-tab rail-tab" data-view="settings" type="button">
+            <svg class="rail-tab-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="3" />
+              <path d="M19.4 15a1.7 1.7 0 0 0 .3 1.9l.1.1-2.8 2.8-.1-.1a1.7 1.7 0 0 0-1.9-.3 1.7 1.7 0 0 0-1 1.6v.2h-4V21a1.7 1.7 0 0 0-1-1.6 1.7 1.7 0 0 0-1.9.3l-.1.1L4.2 17l.1-.1a1.7 1.7 0 0 0 .3-1.9A1.7 1.7 0 0 0 3 14H2.8v-4H3a1.7 1.7 0 0 0 1.6-1 1.7 1.7 0 0 0-.3-1.9L4.2 7 7 4.2l.1.1A1.7 1.7 0 0 0 9 4.6a1.7 1.7 0 0 0 1-1.6v-.2h4V3a1.7 1.7 0 0 0 1 1.6 1.7 1.7 0 0 0 1.9-.3l.1-.1L19.8 7l-.1.1a1.7 1.7 0 0 0-.3 1.9 1.7 1.7 0 0 0 1.6 1h.2v4H21a1.7 1.7 0 0 0-1.6 1Z" />
+            </svg>
+            <span>设置</span>
+          </button>
+        </nav>
+
+        <div class="rail-map-head">
+          <div>
+            <p class="eyebrow" id="railMapEyebrow">路线</p>
+            <h2 id="railMapTitle">全部关卡</h2>
+          </div>
+          <div class="rail-map-actions">
+            <span id="exerciseCount" class="count-badge">0 关</span>
+            <button
+              id="mapExpandButton"
+              class="rail-icon-button"
+              type="button"
+              aria-expanded="false"
+              aria-label="全屏查看路线"
+              title="全屏查看"
+            >
+              <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M8 3H5a2 2 0 0 0-2 2v3" />
+                <path d="M21 8V5a2 2 0 0 0-2-2h-3" />
+                <path d="M3 16v3a2 2 0 0 0 2 2h3" />
+                <path d="M16 21h3a2 2 0 0 0 2-2v-3" />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <div id="roadmap" class="roadmap-list"></div>
+
+        <svg
+          id="railGraph"
+          class="thought-graph rail-graph"
+          viewBox="0 0 1200 760"
+          hidden
+        ></svg>
+      </aside>
+
+      <main class="stage" id="stage">
+        <button
+          id="railShowButton"
+          class="rail-show-button"
+          type="button"
+          aria-label="展开侧栏"
+          title="展开侧栏"
+          hidden
+        >
+          ›
+        </button>
+
+      <section class="workspace">
+        <div id="loading" class="loading-state">
+          <p>正在读取学习进度...</p>
+        </div>
+
+        <article id="exerciseView" class="exercise-view" hidden>
+          <header class="exercise-header">
+            <div>
+            <p id="exerciseStage" class="eyebrow">关卡</p>
+              <h2 id="exerciseTitle"></h2>
+              <p id="exerciseSummary" class="summary"></p>
+            </div>
+            <div class="exercise-status">
+              <span id="exerciseStatus" class="status-pill">待完成</span>
+              <span id="exerciseMinutes" class="time-label"></span>
+              <button
+                class="icon-button"
+                type="button"
+                data-refresh="practice"
+                aria-label="刷新本页数据"
+                title="刷新"
+              >
+                <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21 12a9 9 0 1 1-2.6-6.4" />
+                  <path d="M21 3v6h-6" />
+                </svg>
+              </button>
+            </div>
+          </header>
+
+          <div class="progress-row">
+            <div class="progress-track" aria-hidden="true">
+              <span id="exerciseProgress"></span>
+            </div>
+            <span id="exerciseProgressLabel" class="progress-label"
+              >模块进度</span
+            >
+          </div>
+
+          <section class="file-location">
+            <div class="file-location-copy">
+              <span class="knowledge-label">文件</span>
+              <code id="exercisePath" class="file-location-root"></code>
+              <ul class="file-location-list">
+                <li><span>题目说明</span><code id="readmePath"></code></li>
+                <li><span>编码文件</span><code id="starterPath"></code></li>
+                <li><span>自动检查</span><code id="testPath"></code></li>
+              </ul>
+            </div>
+            <div class="file-location-actions">
+              <button
+                id="copyExercisePathButton"
+                class="secondary-button"
+                type="button"
+              >
+                <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <rect width="14" height="14" x="8" y="8" rx="2" ry="2" />
+                  <path
+                    d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"
+                  />
+                </svg>
+                <span class="btn-label">复制路径</span>
+              </button>
+              <button id="copyContextButton" class="secondary-button" type="button">
+                <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                  <polyline points="7 10 12 15 17 10" />
+                  <line x1="12" x2="12" y1="15" y2="3" />
+                </svg>
+                <span class="btn-label">导出</span>
+              </button>
+            </div>
+          </section>
+
+          <nav class="subnav" data-subnav-group="practice">
+          <button class="subnav-button active" data-subview-target="work" type="button">
+            作答
+          </button>
+          <button class="subnav-button" data-subview-target="knowledge" type="button">
+            讲义
+          </button>
+          <button class="subnav-button" data-subview-target="mentor" type="button">
+            协作
+          </button>
+          </nav>
+
+          <section
+            id="assessmentPanel"
+            class="assessment-panel"
+            data-subview-group="practice"
+            data-subview-name="work"
+            hidden
+          >
+            <div class="panel-heading">
+              <p class="eyebrow">作答</p>
+              <h3>选择与文本题</h3>
+            </div>
+            <div id="assessmentItems" class="assessment-items"></div>
+          </section>
+
+          <div
+            class="concept-row"
+            id="concepts"
+            data-subview-group="practice"
+            data-subview-name="work"
+          ></div>
+
+          <section
+            class="knowledge-panel"
+            data-subview-group="practice"
+            data-subview-name="knowledge"
+            hidden
+          >
+            <div class="panel-heading panel-heading-row">
+              <div>
+              <p class="eyebrow">知识点</p>
+              <h3 id="knowledgeTitle">知识点</h3>
+              </div>
+              <span class="count-badge">先理解，再操作</span>
+            </div>
+            <div class="knowledge-grid">
+              <div class="knowledge-summary">
+                <span class="knowledge-label">它在解决什么</span>
+                <p id="knowledgeSummary"></p>
+              </div>
+              <div class="knowledge-syntax">
+                <span class="knowledge-label">核心写法</span>
+                <pre id="knowledgeSyntax"></pre>
+              </div>
+              <div class="knowledge-points">
+                <span class="knowledge-label">关键点</span>
+                <ul id="knowledgePoints"></ul>
+              </div>
+              <div class="knowledge-pitfall">
+                <span class="knowledge-label">常见误区</span>
+                <p id="knowledgePitfall"></p>
+              </div>
+            </div>
+          </section>
+
+          <div
+            class="exercise-grid"
+            data-subview-group="practice"
+            data-subview-name="work"
+          >
+            <section class="document-panel">
+              <div class="panel-heading">
+              <p class="eyebrow">任务</p>
+                <h3>先读契约，再写代码</h3>
+              </div>
+              <div id="exerciseDoc" class="document-body"></div>
+            </section>
+
+            <div class="activity-stack">
+              <section class="terminal-panel">
+                <div class="panel-heading panel-heading-row">
+                  <div>
+                    <p class="eyebrow">检查</p>
+                    <h3>运行测试</h3>
+                  </div>
+                  <span id="attemptCount" class="attempt-label">0 次尝试</span>
+                </div>
+                <div class="action-row">
+                  <button id="checkButton" class="primary-button" type="button">
+                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <polygon points="6 3 20 12 6 21 6 3" />
+                    </svg>
+                    <span class="btn-label">运行</span>
+                  </button>
+                  <button id="hintButton" class="secondary-button" type="button">
+                    <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                      <path
+                        d="M15 14c.2-1 .7-1.7 1.5-2.5 1-.9 1.5-2.2 1.5-3.5A6 6 0 0 0 6 8c0 1.3.5 2.6 1.5 3.5.8.8 1.3 1.5 1.5 2.5"
+                      />
+                      <path d="M9 18h6" />
+                      <path d="M10 22h4" />
+                    </svg>
+                    提示
+                  </button>
+                  <button
+                    id="nextPracticeButton"
+                    class="secondary-button"
+                    type="button"
+                    hidden
+                  >
+                    <span class="btn-label">再练</span>
+                  </button>
+                </div>
+                <div id="hintBox" class="hint-box" hidden>
+                  <strong id="hintLabel">提示</strong>
+                  <p id="hintText"></p>
+                </div>
+                <output id="checkOutput" class="check-output" aria-live="polite">
+                  完成 starter.py 后点「运行」。
+                </output>
+              </section>
+
+            </div>
+          </div>
+
+          <section
+            class="review-panel"
+            data-subview-group="practice"
+            data-subview-name="work"
+          >
+            <div class="panel-heading panel-heading-row">
+              <div>
+                <p class="eyebrow">记录</p>
+                <h3>本次记录</h3>
+              </div>
+              <div class="header-actions">
+                <button
+                  id="loadCurrentToChatButton"
+                  class="secondary-button"
+                  type="button"
+                >
+                  载入到对话
+                </button>
+              </div>
+            </div>
+            <div id="practiceReviewList" class="history-list"></div>
+          </section>
+
+          <section
+            class="mentor-panel ai-playbook"
+            data-subview-group="practice"
+            data-subview-name="mentor"
+            hidden
+          >
+            <div class="panel-heading panel-heading-row">
+              <div>
+              <p class="eyebrow">协作</p>
+                <h3>用 Vibe Coding 推进，但把控制权留在自己手里</h3>
+              </div>
+              <span class="count-badge">人负责判断</span>
+            </div>
+
+            <p id="aiContext" class="ai-context"></p>
+
+            <div id="playbookGrid" class="playbook-grid">
+              <article class="playbook-step">
+                <span class="step-number">01</span>
+                <h4>先定义验收条件</h4>
+                <p>
+                  让 AI 写代码前，先说清输入、输出、边界和“怎样算完成”。
+                  验收条件应来自需求或测试，而不是模型自己的猜测。
+                </p>
+              </article>
+              <article class="playbook-step">
+                <span class="step-number">02</span>
+                <h4>一次只改一个工作单元</h4>
+                <p>
+                  把任务限制在一个函数、一个组件或一个接口。改动越小，
+                  越容易阅读差异，也越容易定位回归。
+                </p>
+              </article>
+              <article class="playbook-step">
+                <span class="step-number">03</span>
+                <h4>计划、补丁、验证、审查</h4>
+                <p>
+                  先让 AI 给短计划和风险，再看代码差异，随后运行测试，
+                  最后让 AI 用一个独立审查视角寻找遗漏。
+                </p>
+              </article>
+              <article class="playbook-step">
+                <span class="step-number">04</span>
+                <h4>让 AI 先写测试和失败场景</h4>
+                <p>
+                  要求它列出空输入、边界值、错误类型和最小复现。
+                  能稳定复现问题，通常比直接给出修复更有价值。
+                </p>
+              </article>
+              <article class="playbook-step">
+                <span class="step-number">05</span>
+                <h4>主动管理上下文</h4>
+                <p>
+                  只提供相关文件、约束、示例和错误日志。上下文越干净，
+                  AI 越不容易发明不存在的接口或依赖。
+                </p>
+              </article>
+              <article class="playbook-step">
+                <span class="step-number">06</span>
+                <h4>理解、验证、再信任</h4>
+                <p>
+                  每一行合并前都能解释“为什么这样写”；安全、隐私、
+                  数据破坏和依赖风险由人承担最终责任。
+                </p>
+              </article>
+            </div>
+
+            <details class="prompt-template">
+              <summary>展开一套可复用的协作提示模板</summary>
+              <pre>目标：
+验收条件：
+允许修改的范围：
+必须保持不变的接口：
+当前失败测试或最小复现：
+相关文件与约束：
+
+请先给出简短计划、风险和建议测试，
+不要立即重写完整文件。
+实现后列出改动原因、运行结果和仍未验证的部分。</pre>
+            </details>
+          </section>
+        </article>
+      </section>
+
+      <section id="historyView" class="workspace secondary-view" hidden>
+        <header class="page-header">
+          <div>
+            <p id="historyEyebrow" class="eyebrow">档案</p>
+            <h2 id="historyTitle">学习概览</h2>
+            <p id="historySummary" class="summary">
+              汇总路线进度、通过趋势与最近的运行记录。
+            </p>
+          </div>
+          <div class="header-actions">
+            <button
+              class="icon-button"
+              type="button"
+              data-refresh="history"
+              aria-label="刷新本页数据"
+              title="刷新"
+            >
+              <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 12a9 9 0 1 1-2.6-6.4" />
+                <path d="M21 3v6h-6" />
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <nav class="subnav" data-subnav-group="history">
+          <button class="subnav-button active" data-subview-target="overview" type="button">
+            总览
+          </button>
+          <button class="subnav-button" data-subview-target="diagnosis" type="button">
+            诊断
+          </button>
+          <button class="subnav-button" data-subview-target="practice" type="button">
+            补练
+          </button>
+          <button class="subnav-button" data-subview-target="maintenance" type="button">
+            维护
+          </button>
+        </nav>
+
+        <div
+          class="summary-grid"
+          data-subview-group="history"
+          data-subview-name="overview"
+        >
+          <div class="summary-metric">
+            <strong id="historyAttempts">0</strong>
+            <span>累计运行</span>
+          </div>
+          <div class="summary-metric">
+            <strong id="historyPassRate">0%</strong>
+            <span>通过率</span>
+          </div>
+          <div class="summary-metric">
+            <strong id="historyLatest">暂无</strong>
+            <span>最近运行</span>
+          </div>
+        </div>
+
+        <section
+          class="analysis-panel overview-trend"
+          data-subview-group="history"
+          data-subview-name="overview"
+        >
+          <div class="panel-heading panel-heading-row">
+            <div>
+              <p class="eyebrow">运行节奏</p>
+              <h3>通过趋势</h3>
+            </div>
+            <span id="historyTrendNote" class="attempt-label">暂无记录</span>
+          </div>
+          <div id="historyTrend" class="trend-strip"></div>
+        </section>
+
+        <section
+          class="analysis-panel"
+          data-subview-group="history"
+          data-subview-name="overview"
+        >
+          <div class="panel-heading">
+            <p class="eyebrow">活动</p>
+            <h3>最近运行</h3>
+          </div>
+          <div id="historyRecent" class="recent-list"></div>
+        </section>
+
+        <section
+          class="companion-toolbar"
+          data-subview-group="history"
+          data-subview-name="diagnosis"
+          hidden
+        >
+          <div>
+            <h3>从历史记录生成诊断</h3>
+            <p id="companionMessage">
+              模型不可用时，系统仍会使用本地规则分析失败记录。
+            </p>
+          </div>
+          <button id="analyzeButton" class="primary-button" type="button">
+            诊断
+          </button>
+        </section>
+
+        <section
+          class="analysis-panel"
+          data-subview-group="history"
+          data-subview-name="diagnosis"
+          hidden
+        >
+          <div class="panel-heading">
+            <p class="eyebrow">掌握度</p>
+            <h3>按测试知识点统计</h3>
+          </div>
+          <div id="masteryList" class="mastery-list"></div>
+        </section>
+
+        <section
+          class="analysis-panel"
+          data-subview-group="history"
+          data-subview-name="diagnosis"
+          hidden
+        >
+          <div class="panel-heading">
+            <p class="eyebrow">薄弱点</p>
+            <h3>薄弱知识点</h3>
+          </div>
+          <p id="analysisSummary" class="analysis-summary">
+            还没有生成分析结果。
+          </p>
+          <div id="weaknessList" class="weakness-list"></div>
+        </section>
+
+        <section
+          class="analysis-panel"
+          data-subview-group="history"
+          data-subview-name="practice"
+          hidden
+        >
+          <div class="panel-heading">
+            <p class="eyebrow">补练</p>
+            <h3>针对薄弱点的习题</h3>
+          </div>
+          <div id="practiceList" class="practice-list"></div>
+        </section>
+
+        <section
+          class="maintenance-panel"
+          data-subview-group="history"
+          data-subview-name="maintenance"
+          hidden
+        >
+          <div class="panel-heading">
+            <p class="eyebrow">维护</p>
+            <h3>学习数据</h3>
+          </div>
+          <div class="summary-grid maintenance-metrics">
+            <div class="summary-metric">
+              <strong id="maintenanceRecords">0</strong>
+              <span>运行记录</span>
+            </div>
+            <div class="summary-metric">
+              <strong id="maintenanceGenerated">0</strong>
+              <span>AI 练习</span>
+            </div>
+            <div class="summary-metric">
+              <strong id="maintenanceMistakes">0</strong>
+              <span>活跃错题</span>
+            </div>
+            <div class="summary-metric">
+              <strong id="maintenanceSize">0 KB</strong>
+              <span>数据大小</span>
+            </div>
+          </div>
+          <div class="maintenance-actions">
+            <button id="createBackupButton" class="primary-button" type="button">
+              新建备份
+            </button>
+            <button class="secondary-button" data-cleanup="records_30d" type="button">
+              清理旧记录
+            </button>
+            <button
+              class="secondary-button"
+              data-cleanup="mastered_mistakes"
+              type="button"
+            >
+              清理已掌握
+            </button>
+          </div>
+          <div id="aiUsageSummary" class="ai-usage-summary"></div>
+          <div id="backupList" class="backup-list"></div>
+          <div id="generatedExerciseList" class="generated-exercise-list"></div>
+        </section>
+      </section>
+
+      <section id="companionView" class="workspace secondary-view" hidden>
+        <header class="page-header">
+          <div>
+            <p id="companionEyebrow" class="eyebrow">伴学</p>
+            <h2 id="companionTitle">伴学</h2>
+            <p id="companionSummary" class="summary">
+              围绕当前题目或历史题目提问，可以跨题目载入多份上下文。
+            </p>
+          </div>
+          <span id="companionStatus" class="provider-badge">检查模型配置...</span>
+          <button
+            class="icon-button"
+            type="button"
+            data-refresh="companion"
+            aria-label="刷新对话"
+            title="刷新"
+          >
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12a9 9 0 1 1-2.6-6.4" />
+              <path d="M21 3v6h-6" />
+            </svg>
+          </button>
+        </header>
+
+        <section class="companion-toolbar">
+          <div>
+            <h3>围绕题目提问</h3>
+            <p>
+              载入题目后，对话只保留题目、代码与测试证据；模型不可用时使用本地规则。
+            </p>
+          </div>
+          <div class="header-actions">
+            <button
+              id="loadCurrentExerciseButton"
+              class="secondary-button"
+              type="button"
+            >
+              载入当前题目
+            </button>
+            <button id="analyzeCurrentButton" class="primary-button" type="button">
+              分析当前题目
+            </button>
+            <button id="workshopModeButton" class="secondary-button" type="button">
+              前往工坊
+            </button>
+          </div>
+        </section>
+
+        <p class="privacy-note">
+          密钥仅由本地 Python 服务读取，不会发送到浏览器。配置模型后，最近的题目、通过状态、错误输出和代码快照会发送给所配置的模型用于诊断。
+        </p>
+
+        <section class="chat-panel">
+          <div class="panel-heading panel-heading-row">
+            <div>
+            <p class="eyebrow">对话</p>
+              <h3>围绕具体题目深入提问</h3>
+            </div>
+            <div class="header-actions">
+              <select id="historyExerciseSelect" class="compact-select">
+                <option value="">选择历史题目</option>
+              </select>
+              <button id="loadHistoryContextButton" class="secondary-button" type="button">
+                载入历史题目
+              </button>
+              <button id="newChatButton" class="secondary-button" type="button">
+                新对话
+              </button>
+            </div>
+          </div>
+          <div class="chat-session-toolbar">
+            <span class="toolbar-caption">对话</span>
+            <select id="chatSessionSelect" aria-label="选择伴学对话"></select>
+            <input
+              id="chatTitleInput"
+              type="text"
+              maxlength="120"
+              placeholder="对话名称"
+            />
+            <button id="renameChatButton" class="micro-button" type="button">
+              保存名称
+            </button>
+            <button id="clearChatButton" class="micro-button" type="button">
+              清空消息
+            </button>
+            <button id="deleteChatButton" class="micro-button danger" type="button">
+              删除对话
+            </button>
+          </div>
+          <div class="chat-context-section">
+            <div class="chat-context-heading">
+              <span>已载入题目</span>
+              <button id="clearChatContextButton" class="micro-button" type="button">
+                清除全部
+              </button>
+            </div>
+            <div id="chatContextList" class="chat-context-list"></div>
+          </div>
+          <div id="chatMessages" class="chat-messages" aria-live="polite"></div>
+          <form id="chatForm" class="chat-composer">
+            <textarea
+              id="chatInput"
+              rows="3"
+              placeholder="例如：为什么 function 执行了 print 却仍然返回 None？"
+            ></textarea>
+            <button id="sendChatButton" class="primary-button" type="submit">
+              发送
+            </button>
+          </form>
+        </section>
+
+      </section>
+
+      <section id="workshopView" class="workspace secondary-view" hidden>
+        <header class="page-header">
+          <div>
+            <p id="workshopEyebrow" class="eyebrow">工坊</p>
+            <h2 id="workshopTitle">图谱</h2>
+            <p id="workshopSummary" class="summary">
+              提问后 AI 创建知识支点，可继续追问、形成分支，并把节点变成正式练习。
+            </p>
+          </div>
+          <div class="header-actions">
+            <button
+              class="icon-button"
+              type="button"
+              data-refresh="workshop"
+              aria-label="刷新工坊数据"
+              title="刷新"
+            >
+              <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M21 12a9 9 0 1 1-2.6-6.4" />
+                <path d="M21 3v6h-6" />
+              </svg>
+            </button>
+          </div>
+        </header>
+
+        <nav class="subnav" data-subnav-group="workshop">
+          <button
+            class="subnav-button active"
+            data-subview-target="workshop"
+            type="button"
+          >
+            图谱
+          </button>
+          <button class="subnav-button" data-subview-target="compiler" type="button">
+            编译
+          </button>
+        </nav>
+
+        <section
+          class="workshop-panel"
+          data-subview-group="workshop"
+          data-subview-name="workshop"
+        >
+          <div class="workshop-layout">
+            <section class="graph-panel">
+              <div class="panel-heading panel-heading-row">
+                <div>
+                  <p class="eyebrow">思维关系图</p>
+                  <h3>不断生长的知识树</h3>
+                </div>
+                <div class="header-actions">
+                  <button id="fitGraphButton" class="micro-button" type="button">
+                    适配
+                  </button>
+                </div>
+              </div>
+              <svg id="thoughtGraph" class="thought-graph" viewBox="0 0 1200 760"></svg>
+            </section>
+
+            <aside class="workshop-sidebar">
+              <div class="workshop-chat-heading">
+                <div>
+                  <p class="eyebrow">创造式对话</p>
+                  <h3>从一个问题开始生长</h3>
+                </div>
+                <span id="workshopStatus" class="provider-badge">待提问</span>
+              </div>
+              <div id="workshopMessages" class="workshop-messages"></div>
+              <form id="workshopForm" class="chat-composer">
+                <textarea
+                  id="workshopInput"
+                  rows="3"
+                  placeholder="例如：从这个知识出发，还能延伸出哪些关键分支？"
+                ></textarea>
+            <button class="primary-button" type="submit">提问</button>
+              </form>
+              <section id="nodeDetail" class="node-detail" hidden></section>
+            </aside>
+          </div>
+        </section>
+
+        <section
+          class="compiler-subview"
+          data-subview-group="workshop"
+          data-subview-name="compiler"
+          hidden
+        >
+          <nav class="subnav subnav-secondary" data-subnav-group="compilerSubtabs">
+            <button class="subnav-button active" data-subview-target="create" type="button">
+              新建
+            </button>
+            <button class="subnav-button" data-subview-target="list" type="button">
+              列表
+            </button>
+            <button class="subnav-button" data-subview-target="blueprint" type="button">
+              蓝图
+            </button>
+          </nav>
+
+          <form
+            id="subjectCompilerForm"
+            class="settings-panel compiler-form"
+            data-subview-group="compilerSubtabs"
+            data-subview-name="create"
+          >
+            <div class="settings-grid">
+              <label class="settings-field">
+                <span>学习科目或主题</span>
+                <input
+                  id="compilerSubjectInput"
+                  type="text"
+                  placeholder="例如：数据结构、数学优化理论、Web 应用开发"
+                />
+              </label>
+              <label class="settings-field">
+                <span>学习模式</span>
+                <select id="compilerModeInput">
+                  <option value="auto">自动判断</option>
+                  <option value="programming">编程实操</option>
+                  <option value="conceptual">概念与思维训练</option>
+                  <option value="hybrid">编程 + 理论混合</option>
+                </select>
+              </label>
+              <label class="settings-field settings-field-wide">
+                <span>知识材料</span>
+                <textarea
+                  id="compilerMaterialInput"
+                  rows="10"
+                  placeholder="可粘贴大纲、教材内容、笔记或课程要求；也可以只填写主题。"
+                ></textarea>
+              </label>
+            </div>
+            <div class="settings-actions">
+              <button id="compileSubjectButton" class="primary-button" type="submit">
+                生成课程
+              </button>
+            </div>
+            <p id="compilerMessage" class="settings-message" aria-live="polite"></p>
+          </form>
+
+          <section
+            class="analysis-panel compiler-history"
+            data-subview-group="compilerSubtabs"
+            data-subview-name="list"
+            hidden
+          >
+            <div class="panel-heading">
+            <p class="eyebrow">课程</p>
+              <h3>课程蓝图</h3>
+            </div>
+            <div id="subjectList" class="subject-list"></div>
+          </section>
+
+          <section
+            id="blueprintView"
+            class="analysis-panel blueprint-view"
+            data-subview-group="compilerSubtabs"
+            data-subview-name="blueprint"
+            hidden
+          ></section>
+        </section>
+
+      </section>
+
+      <section id="settingsView" class="workspace secondary-view" hidden>
+        <header class="page-header">
+          <div>
+            <p id="settingsEyebrow" class="eyebrow">设置</p>
+            <h2 id="settingsTitle">AI 服务配置</h2>
+            <p id="settingsSummary" class="summary">
+              配置只写入本机 .env，现有密钥不会发送到浏览器。
+            </p>
+          </div>
+          <span id="aiSettingsStatus" class="provider-badge">读取配置...</span>
+          <button
+            class="icon-button"
+            type="button"
+            data-refresh="settings"
+            aria-label="重新读取配置"
+            title="重新读取"
+          >
+            <svg class="btn-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M21 12a9 9 0 1 1-2.6-6.4" />
+              <path d="M21 3v6h-6" />
+            </svg>
+          </button>
+        </header>
+
+        <nav class="subnav" data-subnav-group="settings">
+          <button class="subnav-button active" data-subview-target="ai" type="button">
+            模型
+          </button>
+          <button class="subnav-button" data-subview-target="platform" type="button">
+            平台
+          </button>
+        </nav>
+
+        <form
+          id="aiSettingsForm"
+          class="settings-panel"
+          data-subview-group="settings"
+          data-subview-name="ai"
+        >
+          <div class="settings-grid">
+            <label class="settings-field settings-field-wide">
+              <span>API 密钥</span>
+              <input
+                id="aiApiKeyInput"
+                type="password"
+                autocomplete="new-password"
+                placeholder="留空则保持当前密钥"
+              />
+            </label>
+            <label class="settings-field settings-field-wide">
+              <span>Base URL</span>
+              <input id="aiBaseUrlInput" type="url" />
+            </label>
+            <label class="settings-field">
+              <span>模型</span>
+              <input id="aiModelInput" type="text" />
+            </label>
+            <label class="settings-field">
+              <span>超时秒数</span>
+              <input id="aiTimeoutInput" type="number" min="5" max="180" />
+            </label>
+            <label class="settings-field">
+              <span>历史记录上限</span>
+              <input id="aiHistoryLimitInput" type="number" min="5" max="100" />
+            </label>
+          </div>
+          <label class="settings-check">
+            <input id="clearAiKeyInput" type="checkbox" />
+            <span>清除当前 API 密钥</span>
+          </label>
+          <div class="settings-actions">
+            <button id="saveAiSettingsButton" class="primary-button" type="submit">
+              保存
+            </button>
+            <button id="testAiSettingsButton" class="secondary-button" type="button">
+              测试
+            </button>
+          </div>
+          <p id="aiSettingsMessage" class="settings-message" aria-live="polite"></p>
+        </form>
+
+        <form
+          id="studioSettingsForm"
+          class="settings-panel studio-settings-panel"
+          data-subview-group="settings"
+          data-subview-name="platform"
+          hidden
+        >
+          <div class="panel-heading">
+            <p class="eyebrow">平台身份</p>
+            <h3>复用为其他学习领域</h3>
+          </div>
+          <div class="settings-grid">
+            <label class="settings-field">
+              <span>平台名称</span>
+              <input id="studioNameInput" type="text" maxlength="80" />
+            </label>
+            <label class="settings-field">
+              <span>默认领域</span>
+              <input id="studioDomainInput" type="text" />
+            </label>
+            <label class="settings-field settings-field-wide">
+              <span>副标题</span>
+              <input id="studioTaglineInput" type="text" maxlength="120" />
+            </label>
+          </div>
+          <div class="settings-actions">
+            <button class="primary-button" type="submit">保存</button>
+          </div>
+          <p id="studioSettingsMessage" class="settings-message" aria-live="polite"></p>
+        </form>
+      </section>
+
+      </main>
+    </div>
+
+    <div id="companionWidget" class="companion-widget">
+      <button
+        id="widgetToggle"
+        class="widget-toggle"
+        type="button"
+        aria-expanded="false"
+        aria-controls="widgetPanel"
+        title="伴学 AI"
+      >
+        <span class="widget-face" aria-hidden="true"
+          ><span class="brand-glyph-a">P</span
+          ><span class="brand-glyph-b">y</span></span
+        >
+      </button>
+      <section id="widgetPanel" class="widget-panel" hidden>
+        <header class="widget-head">
+          <div>
+            <p class="eyebrow">伴学 AI</p>
+            <h3>随时提问</h3>
+          </div>
+          <div class="widget-head-actions">
+            <button id="widgetLoadCurrent" class="micro-button" type="button">
+              载入当前题目
+            </button>
+            <button id="widgetAnalyze" class="micro-button" type="button">
+              分析当前题目
+            </button>
+            <button id="widgetClose" class="micro-button" type="button">
+              收起
+            </button>
+          </div>
+        </header>
+        <div id="widgetContext" class="widget-context"></div>
+        <div id="widgetMessages" class="widget-messages" aria-live="polite"></div>
+        <form id="widgetForm" class="chat-composer">
+          <textarea
+            id="widgetInput"
+            rows="2"
+            placeholder="例如：为什么 print 之后函数仍然返回 None？"
+          ></textarea>
+          <button class="primary-button" type="submit">发送</button>
+        </form>
+      </section>
+    </div>
+
+    <script src="/core.js" defer></script>
+    <script src="/app.js" defer></script>
+  </body>
+</html>

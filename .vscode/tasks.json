@@ -1,0 +1,52 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Studio: start dashboard",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/studio.py",
+        "serve",
+        "--port",
+        "8765"
+      ],
+      "isBackground": true,
+      "problemMatcher": []
+    },
+    {
+      "label": "Studio: next exercise",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/studio.py",
+        "next"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Studio: show progress",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "${workspaceFolder}/studio.py",
+        "progress"
+      ],
+      "problemMatcher": []
+    },
+    {
+      "label": "Tests: run all exercises",
+      "type": "shell",
+      "command": "python",
+      "args": [
+        "-m",
+        "pytest",
+        "exercises"
+      ],
+      "problemMatcher": [
+        "$pytest"
+      ]
+    }
+  ]
+}
+
